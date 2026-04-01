@@ -198,6 +198,7 @@ Kluczowe dla developmentu i onboardingu:
 - [ ] Podstawowe statystyki (wykres, kategorie, waste score)
 - [ ] Komentarze Dr. Spendera (Claude API)
 - [ ] Push notifications
+- [ ] Suggestions — SWAP, CANCEL, RULE (podstawowe typy)
 
 ### V2
 - [ ] Integracja Open Banking (Nordigen)
@@ -205,6 +206,8 @@ Kluczowe dla developmentu i onboardingu:
 - [ ] Wykrywanie wzorców
 - [ ] Tygodniowy raport wstydu
 - [ ] "Co mógłbyś za to kupić"
+- [ ] Suggestions — COOK, DOWNGRADE, DUPLICATE
+- [ ] Tracking skuteczności Suggestions (czy wzorzec zanikł)
 
 ### V3
 - [ ] OCR paragonów

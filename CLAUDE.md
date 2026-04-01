@@ -18,8 +18,9 @@ Przykłady wypowiedzi Dr. Spendera:
 1. **Transakcje w czasie rzeczywistym** — integracja Open Banking (Nordigen/GoCardless), import CSV, ręczne wpisywanie
 2. **Statystyki zmarnowanych pieniędzy** — kategorie, trendy, porównania miesięczne, "could have bought" (co mógłbyś za to kupić)
 3. **Komentarze Dr. Spendera** — generowane przez Claude API, personalizowane na podstawie historii
-4. **Powiadomienia push** — Dr. Spender przerywa Twój dzień w najgorszym możliwym momencie
-5. **Tryb testowy** — pełna symulacja z mockowanymi transakcjami bez prawdziwego konta
+4. **Suggestions** — konkretne, wykonalne propozycje zmiany nawyków oparte na wzorcach wydatków (zamiana, gotowanie zamiast zamawiania, anulowanie subskrypcji, zasady behawioralne). Szczegóły: docs/SUGGESTIONS.md
+5. **Powiadomienia push** — Dr. Spender przerywa Twój dzień w najgorszym możliwym momencie
+6. **Tryb testowy** — pełna symulacja z mockowanymi transakcjami bez prawdziwego konta
 
 ## Stack technologiczny (szczegóły w docs/TECH_STACK.md)
 
