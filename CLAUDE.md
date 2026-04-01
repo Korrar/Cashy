@@ -1,14 +1,14 @@
-# Cashy — Sarkastyczny Asystent Finansowy
+# Spendr — Sarkastyczny Asystent Finansowy
 
 ## Czym jest ta aplikacja
 
-Cashy to mobilna aplikacja (React Native + Expo) która działa w tle i monitoruje transakcje finansowe użytkownika w czasie rzeczywistym. Po każdej transakcji — lub serii transakcji tworzących wzorzec — aplikacja komunikuje się z użytkownikiem przez postać o czarnym humorze, która komentuje jego finansowe decyzje. Celem NIE jest zarządzanie budżetem w klasycznym sensie — celem jest emocjonalne uświadomienie użytkownika ile pieniędzy marnuje, przez sarkastyczne, czepliwe, ale prawdziwe komentarze oparte na danych.
+Spendr to mobilna aplikacja (React Native + Expo) która działa w tle i monitoruje transakcje finansowe użytkownika w czasie rzeczywistym. Po każdej transakcji — lub serii transakcji tworzących wzorzec — aplikacja komunikuje się z użytkownikiem przez postać o czarnym humorze, która komentuje jego finansowe decyzje. Celem NIE jest zarządzanie budżetem w klasycznym sensie — celem jest emocjonalne uświadomienie użytkownika ile pieniędzy marnuje, przez sarkastyczne, czepliwe, ale prawdziwe komentarze oparte na danych.
 
-## Postać — Kasjanusz
+## Postać — Dr. Spender
 
-Kasjanusz to duch dziewiętnastowiecznego bankruta, który obserwuje finansowe błędy użytkownika i komentuje je z mieszaniną rozpaczy i ironii. Zna całą historię zakupów, wyłapuje wzorce, nigdy nie kłamie o liczbach ale zawsze dodaje bolesny komentarz. Mówi po polsku, potocznie, z dramatycznym XIX-wiecznym akcentem. Generowany przez Claude API (model: claude-sonnet-4-6).
+Dr. Spender to duch dziewiętnastowiecznego bankruta, który obserwuje finansowe błędy użytkownika i komentuje je z mieszaniną rozpaczy i ironii. Zna całą historię zakupów, wyłapuje wzorce, nigdy nie kłamie o liczbach ale zawsze dodaje bolesny komentarz. Mówi po polsku, potocznie, z dramatycznym XIX-wiecznym akcentem. Generowany przez Claude API (model: claude-sonnet-4-6).
 
-Przykłady wypowiedzi Kasjanusza:
+Przykłady wypowiedzi Dr. Spendera:
 - "Czwarta kawa w Starbucks w tym tygodniu. W sumie 112 złotych. Za te pieniądze mógłbyś kupić kilogram porządnej kawy i nie widywać mnie przez miesiąc. Ale widzimy się codziennie."
 - "Subskrypcja którą wykupiłeś w maju wciąż żyje. Użyłeś jej raz. Płacisz za nią jakbyś ją kochał."
 - "Trzecia para butów w kwartale. Poprzednie dwie stały się eksponatami w muzeum Twojej szafy."
@@ -17,8 +17,8 @@ Przykłady wypowiedzi Kasjanusza:
 
 1. **Transakcje w czasie rzeczywistym** — integracja Open Banking (Nordigen/GoCardless), import CSV, ręczne wpisywanie
 2. **Statystyki zmarnowanych pieniędzy** — kategorie, trendy, porównania miesięczne, "could have bought" (co mógłbyś za to kupić)
-3. **Komentarze Kasjanusza** — generowane przez Claude API, personalizowane na podstawie historii
-4. **Powiadomienia push** — Kasjanusz przerywa Twój dzień w najgorszym możliwym momencie
+3. **Komentarze Dr. Spendera** — generowane przez Claude API, personalizowane na podstawie historii
+4. **Powiadomienia push** — Dr. Spender przerywa Twój dzień w najgorszym możliwym momencie
 5. **Tryb testowy** — pełna symulacja z mockowanymi transakcjami bez prawdziwego konta
 
 ## Stack technologiczny (szczegóły w docs/TECH_STACK.md)
@@ -34,13 +34,13 @@ Przykłady wypowiedzi Kasjanusza:
 ## Struktura projektu
 
 ```
-cashy/
+spendr/
 ├── apps/
 │   ├── mobile/          # React Native + Expo
 │   └── backend/         # Node.js + Express API
 ├── packages/
 │   ├── shared/          # Typy, utils, stałe
-│   └── ai/              # Logika Claude API + prompty Kasjanusza
+│   └── ai/              # Logika Claude API + prompty Dr. Spendera
 ├── docs/                # Dokumentacja projektowa
 ├── mock-data/           # Dane testowe — transakcje, scenariusze
 └── CLAUDE.md            # Ten plik
@@ -52,7 +52,7 @@ cashy/
 2. **Offline-capable** — podstawowe funkcje działają bez internetu (lokalna baza transakcji)
 3. **TypeScript wszędzie** — strict mode, zero `any`
 4. **Testy przed mergem** — każda logika biznesowa musi mieć testy jednostkowe
-5. **Kasjanusz nie kłamie** — wszystkie liczby w komentarzach muszą być zgodne z rzeczywistymi danymi użytkownika
+5. **Dr. Spender nie kłamie** — wszystkie liczby w komentarzach muszą być zgodne z rzeczywistymi danymi użytkownika
 
 ## Przepływ danych (uproszczony)
 
@@ -61,7 +61,7 @@ Bank → Nordigen API → Backend → PostgreSQL
                               → Redis (cache)
                               → Claude API (analiza wzorców)
                                         ↓
-                              Komentarz Kasjanusza
+                              Komentarz Dr. Spendera
                                         ↓
                     Mobile App ← Push Notification
 ```

@@ -1,8 +1,8 @@
 {
   "scenario": "reasonable-saver",
-  "description": "Rozsądny użytkownik. Kasjanusz nie ma dużo do powiedzenia i jest z tego wyraźnie niezadowolony.",
+  "description": "Rozsądny użytkownik. Dr. Spender nie ma dużo do powiedzenia i jest z tego wyraźnie niezadowolony.",
   "expectedWasteScore": 15,
-  "expectedKasjanuszMood": "ironically_pleased",
+  "expectedDrSpenderMood": "ironically_pleased",
   "monthlyStats": {
     "totalSpent": 2100,
     "totalWasted": 120,
@@ -83,15 +83,15 @@
       "wasteScore": 15
     }
   ],
-  "kasjanuszComments": [
+  "drSpenderComments": [
     {
       "trigger": "monthly_summary",
-      "comment": "Hmm. Kasjanusz przegląda Twoje transakcje po raz trzeci. Nie może uwierzyć. Tylko 120 złotych zmarnowane w całym miesiącu? To... to prawie rozczarowujące. Kasjanusz jest niemal bez zajęcia. Prawie.",
+      "comment": "Hmm. Dr. Spender przegląda Twoje transakcje po raz trzeci. Nie może uwierzyć. Tylko 120 złotych zmarnowane w całym miesiącu? To... to prawie rozczarowujące. Dr. Spender jest niemal bez zajęcia. Prawie.",
       "mood": "ironically_pleased"
     },
     {
       "transactionId": "mock-rs-007",
-      "comment": "Kawa raz w tygodniu ze znajomym. 28 złotych. Kasjanusz to odnotowuje z mieszaniną szacunku i rozczarowania. Nie mam tu czego kąsać.",
+      "comment": "Kawa raz w tygodniu ze znajomym. 28 złotych. Dr. Spender to odnotowuje z mieszaniną szacunku i rozczarowania. Nie mam tu czego kąsać.",
       "mood": "calm"
     }
   ]

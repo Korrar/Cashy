@@ -1,4 +1,4 @@
-# Architektura — Cashy
+# Architektura — Spendr
 
 ## Diagram wysokopoziomowy
 
@@ -8,13 +8,13 @@
 │  React Native + Expo                                            │
 │                                                                 │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────┐  │
-│  │Dashboard │  │ Stats &  │  │Kasjanusz │  │Transactions  │  │
+│  │Dashboard │  │ Stats &  │  │Dr. Spender │  │Transactions  │  │
 │  │Screen    │  │Analytics │  │Feed      │  │Screen        │  │
 │  └────┬─────┘  └────┬─────┘  └────┬─────┘  └──────┬───────┘  │
 │       │              │              │                │          │
 │  ┌────┴──────────────┴──────────────┴────────────────┴───────┐ │
 │  │                    Zustand Store                           │ │
-│  │  transactionsSlice | kasjanuszSlice | statsSlice          │ │
+│  │  transactionsSlice | drSpenderSlice | statsSlice          │ │
 │  └────────────────────────────┬───────────────────────────────┘ │
 │                               │ axios                           │
 └───────────────────────────────┼─────────────────────────────────┘
@@ -32,12 +32,12 @@
 │                            │                                    │
 │  ┌─────────────────────────┴──────────────────────────────────┐ │
 │  │                    Service Layer                            │ │
-│  │  TransactionService | KasjanuszService | StatsService      │ │
+│  │  TransactionService | DrSpenderService | StatsService      │ │
 │  └──┬──────────────────┬──────────────────┬───────────────────┘ │
 │     │                  │                  │                      │
 │  ┌──┴───┐  ┌───────────┴──┐  ┌───────────┴──────┐             │
 │  │Prisma│  │ Bull Queue   │  │ Claude API Client│             │
-│  │(PG)  │  │(Redis)       │  │ Kasjanusz        │             │
+│  │(PG)  │  │(Redis)       │  │ Dr. Spender        │             │
 │  └──────┘  └──────────────┘  └──────────────────┘             │
 └─────────────────────────────────────────────────────────────────┘
         │                │                   │
@@ -72,17 +72,17 @@
    → PatternDetectionService.checkPatterns(userId)
 
 5. Jeśli wasteScore > 30 LUB wykryto wzorzec:
-   → KasjanuszService.generateComment(context)
+   → DrSpenderService.generateComment(context)
    → Anthropic Claude API call
    → Zapis komentarza do DB
 
 6. Push notification przez Expo Push Service
-   → Tytuł: "Kasjanusz ma coś do powiedzenia"
+   → Tytuł: "Dr. Spender ma coś do powiedzenia"
    → Body: pierwsze zdanie komentarza
 
 7. Mobile app odbiera notification
    → Deep link do transakcji
-   → Animacja Kasjanusza w aplikacji
+   → Animacja Dr. Spendera w aplikacji
 ```
 
 ## Przepływ danych — Ręczna Transakcja
@@ -94,10 +94,10 @@
 2. Backend: walidacja (zod) → zapis do DB
 
 3. Synchroniczny przepływ:
-   → KasjanuszService.generateComment()  (szybki, bez kolejki)
+   → DrSpenderService.generateComment()  (szybki, bez kolejki)
    → Odpowiedź zawiera komentarz
 
-4. Mobile app wyświetla komentarz Kasjanusza od razu
+4. Mobile app wyświetla komentarz Dr. Spendera od razu
    → Brak push notificaton (user jest w aplikacji)
 ```
 
@@ -106,16 +106,16 @@
 ```
 Cron job: każdy poniedziałek 8:00
 1. StatsService.getWeeklySummary(userId)
-2. KasjanuszService.generateWeeklyRoast(summary)
+2. DrSpenderService.generateWeeklyRoast(summary)
    → Długi prompt, model: claude-opus-4-6
-3. Zapis do KasjanuszComment (type: WEEKLY_ROAST)
+3. Zapis do DrSpenderComment (type: WEEKLY_ROAST)
 4. Push notification
 ```
 
 ## Struktura katalogów — szczegółowa
 
 ```
-cashy/
+spendr/
 ├── apps/
 │   ├── mobile/
 │   │   ├── app/                    # Expo Router (file-based routing)
@@ -125,16 +125,16 @@ cashy/
 │   │   │   ├── (tabs)/
 │   │   │   │   ├── index.tsx       # Dashboard
 │   │   │   │   ├── stats.tsx       # Statystyki
-│   │   │   │   ├── kasjanusz.tsx   # Feed komentarzy
+│   │   │   │   ├── dr-spender.tsx   # Feed komentarzy
 │   │   │   │   └── settings.tsx   # Ustawienia
 │   │   │   ├── transaction/
 │   │   │   │   ├── [id].tsx        # Szczegóły transakcji
 │   │   │   │   └── add.tsx         # Dodaj ręcznie
 │   │   │   └── _layout.tsx
 │   │   ├── components/
-│   │   │   ├── kasjanusz/
-│   │   │   │   ├── KasjanuszWidget.tsx
-│   │   │   │   ├── KasjanuszAvatar.tsx
+│   │   │   ├── dr-spender/
+│   │   │   │   ├── Dr. SpenderWidget.tsx
+│   │   │   │   ├── Dr. SpenderAvatar.tsx
 │   │   │   │   └── CommentBubble.tsx
 │   │   │   ├── charts/
 │   │   │   │   ├── SpendingLineChart.tsx
@@ -146,7 +146,7 @@ cashy/
 │   │   │   └── ui/                 # Komponenty bazowe
 │   │   ├── store/                  # Zustand slices
 │   │   │   ├── transactionsSlice.ts
-│   │   │   ├── kasjanuszSlice.ts
+│   │   │   ├── drSpenderSlice.ts
 │   │   │   └── statsSlice.ts
 │   │   ├── services/               # API calls
 │   │   │   ├── api.ts              # Axios instance
@@ -167,7 +167,7 @@ cashy/
 │       │   │   └── sync.ts
 │       │   ├── services/
 │       │   │   ├── TransactionService.ts
-│       │   │   ├── KasjanuszService.ts
+│       │   │   ├── DrSpenderService.ts
 │       │   │   ├── StatsService.ts
 │       │   │   ├── PatternDetectionService.ts
 │       │   │   └── NordigenService.ts
@@ -191,7 +191,7 @@ cashy/
 │   └── shared/
 │       ├── types/                  # Współdzielone typy TS
 │       │   ├── Transaction.ts
-│       │   ├── KasjanuszComment.ts
+│       │   ├── DrSpenderComment.ts
 │       │   └── Stats.ts
 │       └── constants/
 │           └── categories.ts
@@ -220,7 +220,7 @@ cashy/
 - Wystarczający dla skali tej aplikacji
 
 ### Dlaczego Bull + Redis zamiast inline processing?
-- Komentarze Kasjanusza nie muszą być synchroniczne
+- Komentarze Dr. Spendera nie muszą być synchroniczne
 - Izolacja — błąd w AI nie zatrzymuje zapisu transakcji
 - Rate limiting — ograniczenie wywołań Claude API
 
@@ -232,7 +232,7 @@ cashy/
 ### Offline-first
 - Lokalna baza transakcji (MMKV) — podstawowe funkcje bez internetu
 - Sync gdy internet wraca
-- Komentarze Kasjanusza cachowane lokalnie
+- Komentarze Dr. Spendera cachowane lokalnie
 
 ## Security
 

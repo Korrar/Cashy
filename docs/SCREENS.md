@@ -1,18 +1,18 @@
-# Ekrany i UX — Cashy
+# Ekrany i UX — Spendr
 
 ## Ogólny design system
 
 - **Kolorystyka:** Ciemna (dark mode domyślnie)
   - Background: #0A0A0B (prawie czarne)
   - Surface: #141416
-  - Kasjanusz accent: #8B6914 (stara złota sepia)
+  - Dr. Spender accent: #8B6914 (stara złota sepia)
   - Waste (czerwony): #E53E3E
   - Savings (zielony): #38A169
   - Text primary: #F7F7F7
   - Text secondary: #9B9B9B
 
 - **Typografia:** 
-  - Display: Playfair Display (XIX-wieczny klimat dla Kasjanusza)
+  - Display: Playfair Display (XIX-wieczny klimat dla Dr. Spendera)
   - Body: Inter (czytelny, nowoczesny)
 
 - **Ikonografia:** Linia, minimalistyczne
@@ -21,17 +21,17 @@
 
 ## Ekran 1: Splash / Loading
 
-- Animowane logo Cashy
-- Kasjanusz "otwiera oczy" (animacja Lottie)
+- Animowane logo Spendr
+- Dr. Spender "otwiera oczy" (animacja Lottie)
 - Tagline: *"Twoje pieniądze. Twój wstyd."*
 
 ---
 
 ## Ekran 2: Onboarding (3 slajdy)
 
-**Slajd 1:** Przedstawienie Kasjanusza
+**Slajd 1:** Przedstawienie Dr. Spendera
 - Ilustracja postaci
-- "Poznaj Kasjanusza. Zna każdą złotówkę którą zmarnowałeś."
+- "Poznaj Dr. Spendera. Zna każdą złotówkę którą zmarnowałeś."
 
 **Slajd 2:** Jak działa
 - Ikony: transakcje → analiza → komentarz
@@ -49,7 +49,7 @@
 - Lista banków z logo (PKO, mBank, ING, Santander, Millennium...)
 - Search bar do filtrowania
 - Po wyborze → WebView z autoryzacją Nordigen
-- Loading z animacją Kasjanusza czekającego z zegarkiem
+- Loading z animacją Dr. Spendera czekającego z zegarkiem
 
 ---
 
@@ -136,13 +136,13 @@
 
 ---
 
-## Ekran 6: Kasjanusz Feed (Tab 3)
+## Ekran 6: Dr. Spender Feed (Tab 3)
 
 ```
 ┌──────────────────────────────────┐
-│  Kasjanusz                       │
+│  Dr. Spender                       │
 ├──────────────────────────────────┤
-│  [Duży portret Kasjanusza]       │
+│  [Duży portret Dr. Spendera]       │
 │  Stan: 😤 Rozbawiony             │
 │                                  │
 │  ──────────────────────────────  │
@@ -160,7 +160,7 @@
 │  ┌────────────────────────────┐ │
 │  │ "23 minuty po północy.     │ │
 │  │ 89 złotych. Delivery.      │ │
-│  │ Kasjanusz notuje."          │ │
+│  │ Dr. Spender notuje."          │ │
 │  └────────────────────────────┘ │
 │                                  │
 │  Poniedziałek — Raport tygodnia  │
@@ -193,7 +193,7 @@
 │  Waste Score: ██████░░░ 62/100   │
 │                                  │
 │  ──────────────────────────────  │
-│  Kasjanusz mówi:                 │
+│  Dr. Spender mówi:                 │
 │  ┌────────────────────────────┐ │
 │  │ [Portret]                  │ │
 │  │ "Czwarta kawa za zewnątrz  │ │
@@ -239,7 +239,7 @@
 │  │     Dodaj transakcję       │ │
 │  └────────────────────────────┘ │
 │                                  │
-│  Kasjanusz już czeka...          │
+│  Dr. Spender już czeka...          │
 └──────────────────────────────────┘
 ```
 
@@ -248,7 +248,7 @@
 ## Ekran 9: Ustawienia (Tab 4)
 
 - Konto bankowe (status, odłącz, dodaj nowe)
-- Kasjanusz settings:
+- Dr. Spender settings:
   - Agresywność (slider: Delikatny ←→ Bezlitosny)
   - Częstotliwość powiadomień
   - Cisza nocna (toggle + godziny)

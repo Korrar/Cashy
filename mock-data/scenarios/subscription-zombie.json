@@ -2,7 +2,7 @@
   "scenario": "subscription-zombie",
   "description": "Użytkownik z 12 subskrypcjami, z czego 7 to zombie (nieużywane > 30 dni). Płaci za serwisy o których zapomniał.",
   "expectedWasteScore": 78,
-  "expectedKasjanuszMood": "devastated",
+  "expectedDrSpenderMood": "devastated",
   "monthlyStats": {
     "totalSpent": 2890,
     "totalWasted": 520,
@@ -179,10 +179,10 @@
       "daysSinceLastUse": 112
     }
   },
-  "kasjanuszComments": [
+  "drSpenderComments": [
     {
       "transactionId": "mock-sz-006",
-      "comment": "Duolingo Plus. 9 złotych i 99 groszy za naukę języka którego nie uczysz się od 94 dni. Nowy Rok, nowe postanowienia. Kasjanusz widział to już wiele razy.",
+      "comment": "Duolingo Plus. 9 złotych i 99 groszy za naukę języka którego nie uczysz się od 94 dni. Nowy Rok, nowe postanowienia. Dr. Spender widział to już wiele razy.",
       "mood": "devastated"
     },
     {

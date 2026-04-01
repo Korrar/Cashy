@@ -1,11 +1,11 @@
-# Funkcjonalności — Cashy
+# Funkcjonalności — Spendr
 
 ## F1 — Onboarding
 
 ### F1.1 — Rejestracja/Logowanie
 - Email + hasło (JWT)
 - Opcjonalnie: Google OAuth
-- Wprowadzenie postaci Kasjanusza — krótka animowana scena
+- Wprowadzenie postaci Dr. Spendera — krótka animowana scena
 
 ### F1.2 — Podłączenie konta bankowego
 Trzy ścieżki:
@@ -17,7 +17,7 @@ Trzy ścieżki:
 ### F1.3 — Konfiguracja profilu wydatków
 - Miesięczny budżet (opcjonalne)
 - Kategorie które użytkownik chce śledzić
-- Agresywność komentarzy Kasjanusza (Skala: "Delikatny" → "Bezlitosny")
+- Agresywność komentarzy Dr. Spendera (Skala: "Delikatny" → "Bezlitosny")
 
 ---
 
@@ -31,13 +31,13 @@ Trzy ścieżki:
 
 ### F2.2 — Feed transakcji
 - Lista ostatnich transakcji
-- Przy każdej: kategoria, kwota, ikona, komentarz Kasjanusza (jeśli był)
+- Przy każdej: kategoria, kwota, ikona, komentarz Dr. Spendera (jeśli był)
 - Swipe aby ręcznie oznaczyć jako "zmarnowane" / "konieczne"
 
-### F2.3 — Widget Kasjanusza
+### F2.3 — Widget Dr. Spendera
 - Portret postaci (animated)
 - Ostatni komentarz
-- "Nastrój" Kasjanusza — zależy od kondycji finansów w tym miesiącu
+- "Nastrój" Dr. Spendera — zależy od kondycji finansów w tym miesiącu
 
 ---
 
@@ -68,7 +68,7 @@ Algorytm wasteScore:
 Wyświetlanie:
 - Łączny "Waste Score" miesiąca jako procent budżetu
 - Animowany licznik (jak licznik długu narodowego)
-- Kolor: zielony → żółty → czerwony → "Kasjanusz płacze"
+- Kolor: zielony → żółty → czerwony → "Dr. Spender płacze"
 
 ### F3.4 — "Co mógłbyś za to kupić"
 Przelicznik zmarnowanych pieniędzy na konkretne rzeczy:
@@ -81,7 +81,7 @@ Dedykowana sekcja:
 - Lista wykrytych subskrypcji cyklicznych
 - Szacowana aktywność (na podstawie wzorców)
 - Łączny koszt roczny
-- Kasjanusz komentuje każdą z osobna
+- Dr. Spender komentuje każdą z osobna
 
 ### F3.6 — Wzorce i Trendy
 - Wykryte wzorce: "Każdy piątek = jedzenie na wynos"
@@ -91,18 +91,18 @@ Dedykowana sekcja:
 
 ### F3.7 — Tygodniowy Raport Wstydu
 Wysyłany w poniedziałek rano:
-- Podsumowanie tygodnia przez Kasjanusza (długi, dramatyczny monolog)
+- Podsumowanie tygodnia przez Dr. Spendera (długi, dramatyczny monolog)
 - Top 3 "najgłupsze" wydatki tygodnia
 - Jeden "pochwalny" punkt jeśli użytkownik zaoszczędził gdzieś
 
 ---
 
-## F4 — Komentarze Kasjanusza
+## F4 — Komentarze Dr. Spendera
 
 ### F4.1 — Komentarz po transakcji
 Trigger: nowa transakcja z Open Banking lub ręczna
 - Push notification z komentarzem
-- W aplikacji: animacja Kasjanusza + tekst
+- W aplikacji: animacja Dr. Spendera + tekst
 - Generowany przez Claude API na podstawie kontekstu
 
 ### F4.2 — Komentarz przy wzorcu
@@ -111,7 +111,7 @@ Trigger: wykrycie wzorca (Bull job, co godzinę)
 - "To już trzecia restauracja w tym tygodniu..."
 
 ### F4.3 — Kontekstowe komentarze
-Kasjanusz reaguje na specjalne sytuacje:
+Dr. Spender reaguje na specjalne sytuacje:
 - Pierwsza transakcja dnia
 - Transakcja po długiej przerwie od zakupów
 - Rekordowo wysoka transakcja w kategorii
@@ -119,8 +119,8 @@ Kasjanusz reaguje na specjalne sytuacje:
 - Transakcja nocna (po 23:00)
 
 ### F4.4 — Historia komentarzy
-- Feed wszystkich komentarzy Kasjanusza
-- Możliwość "polubienia" (Kasjanusz komentuje polubienia)
+- Feed wszystkich komentarzy Dr. Spendera
+- Możliwość "polubienia" (Dr. Spender komentuje polubienia)
 - Możliwość udostępnienia komentarza (viral potential)
 
 ---
@@ -154,7 +154,7 @@ Kasjanusz reaguje na specjalne sytuacje:
 - Kategorie budżetowe i limity
 - Dzień startu miesiąca budżetowego
 
-### F6.2 — Personalizacja Kasjanusza
+### F6.2 — Personalizacja Dr. Spendera
 - Agresywność: Delikatny / Normalny / Bezlitosny / "Nie mam dla Ciebie litości"
 - Częstotliwość powiadomień: po każdej / tylko ważne / tylko dzienne podsumowanie
 - Cisza nocna (brak powiadomień w nocy)
@@ -174,17 +174,17 @@ Kluczowe dla developmentu i onboardingu:
 - "Kawa-holic" — użytkownik wydający 500 zł/mies na kawę
 - "Subskrypcyjny zombie" — 15 aktywnych subskrypcji, z czego 8 nieużywanych
 - "Impulsywny zakupoholik" — duże zakupy bez wzorca
-- "Rozsądny oszczędzający" — Kasjanusz nie ma dużo do powiedzenia (rzadki scenariusz)
+- "Rozsądny oszczędzający" — Dr. Spender nie ma dużo do powiedzenia (rzadki scenariusz)
 - "Weekendowy szaleniec" — spokojny tydzień, szaleństwo w weekend
 
 ### F7.2 — Symulacja transakcji w czasie
 - Przyspieszony timeline — "przeżyj miesiąc finansowy w 5 minut"
-- Wyzwalanie konkretnych komentarzy Kasjanusza
+- Wyzwalanie konkretnych komentarzy Dr. Spendera
 - Możliwość dodawania własnych testowych transakcji
 
 ### F7.3 — Preview komentarzy
 - Panel gdzie można podejrzeć różne komentarze dla różnych scenariuszy
-- Przydatne przy dostosowywaniu agresywności Kasjanusza
+- Przydatne przy dostosowywaniu agresywności Dr. Spendera
 
 ---
 
@@ -196,7 +196,7 @@ Kluczowe dla developmentu i onboardingu:
 - [ ] Import CSV
 - [ ] Tryb testowy z mock danymi
 - [ ] Podstawowe statystyki (wykres, kategorie, waste score)
-- [ ] Komentarze Kasjanusza (Claude API)
+- [ ] Komentarze Dr. Spendera (Claude API)
 - [ ] Push notifications
 
 ### V2

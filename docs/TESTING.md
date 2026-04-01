@@ -1,4 +1,4 @@
-# Strategia Testowania — Cashy
+# Strategia Testowania — Spendr
 
 ## Piramida testów
 
@@ -20,7 +20,7 @@
 - `TransactionService.categorize()` — kategoryzacja transakcji
 - `StatsService.calculateWasteScore()` — algorytm waste score
 - `PatternDetectionService.detect()` — wykrywanie wzorców
-- `KasjanuszService.buildContext()` — budowanie kontekstu dla AI
+- `Dr. SpenderService.buildContext()` — budowanie kontekstu dla AI
 - Utility functions (formatowanie kwot, dat)
 - Walidatory Zod
 
@@ -111,7 +111,7 @@ describe('TransactionService.categorize', () => {
 ```typescript
 // backend/tests/integration/transactions.test.ts
 describe('POST /api/transactions', () => {
-  it('should create transaction and return Kasjanusz comment', async () => {
+  it('should create transaction and return Dr. Spender comment', async () => {
     const res = await request(app)
       .post('/api/transactions')
       .set('Authorization', `Bearer ${testToken}`)
@@ -125,8 +125,8 @@ describe('POST /api/transactions', () => {
 
     expect(res.status).toBe(201);
     expect(res.body.transaction.id).toBeDefined();
-    expect(res.body.kasjanuszComment).toBeDefined();
-    expect(res.body.kasjanuszComment.content).toBeTruthy();
+    expect(res.body.drSpenderComment).toBeDefined();
+    expect(res.body.drSpenderComment.content).toBeTruthy();
   });
 
   it('should reject transaction without auth', async () => {
@@ -147,7 +147,7 @@ jest.mock('@anthropic-ai/sdk', () => ({
     messages: {
       create: jest.fn().mockResolvedValue({
         content: [{
-          text: 'Testowy komentarz Kasjanusza dla testów.'
+          text: 'Testowy komentarz Dr. Spendera dla testów.'
         }]
       })
     }
@@ -172,7 +172,7 @@ jest.mock('../services/NordigenService', () => ({
 2. Zarejestruj konto
 3. Wybierz "Tryb testowy" (mock data)
 4. Dodaj ręczną transakcję: Starbucks, 28 PLN
-5. Oczekuj: pojawia się komentarz Kasjanusza
+5. Oczekuj: pojawia się komentarz Dr. Spendera
 6. Oczekuj: waste score > 0
 ```
 
@@ -183,7 +183,7 @@ jest.mock('../services/NordigenService', () => ({
 3. Wgraj mock CSV z 10 transakcjami
 4. Oczekuj: 10 transakcji w liście
 5. Oczekuj: statystyki zaktualizowane
-6. Oczekuj: przynajmniej jeden komentarz Kasjanusza
+6. Oczekuj: przynajmniej jeden komentarz Dr. Spendera
 ```
 
 **Scenariusz 3: Statystyki — waste score**
@@ -222,7 +222,7 @@ jest.mock('../services/NordigenService', () => ({
     // ... więcej transakcji
   ],
   "expectedWasteScore": 72,
-  "expectedKasjanuszMood": "amused"
+  "expectedDr. SpenderMood": "amused"
 }
 ```
 

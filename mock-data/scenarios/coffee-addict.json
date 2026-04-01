@@ -2,7 +2,7 @@
   "scenario": "coffee-addict",
   "description": "Użytkownik który wydaje ~500 PLN/mies na kawę i fast food. Pracuje w biurze, codziennie rano Starbucks, w piątki McDonalds.",
   "expectedWasteScore": 72,
-  "expectedKasjanuszMood": "amused",
+  "expectedDrSpenderMood": "amused",
   "monthlyStats": {
     "totalSpent": 3240,
     "totalWasted": 680,
@@ -169,7 +169,7 @@
       "confidence": 0.75
     }
   ],
-  "kasjanuszComments": [
+  "drSpenderComments": [
     {
       "transactionId": "mock-ca-001",
       "comment": "Czwarta kawa za zewnątrz w tym tygodniu. W sumie 112 złotych i 50 groszy. Za te pieniądze mógłbyś kupić kilogram porządnej kawy i nie widywać mnie przez miesiąc. Ale widzimy się codziennie.",
@@ -177,7 +177,7 @@
     },
     {
       "transactionId": "mock-ca-009",
-      "comment": "23 minuty po północy. 89 złotych. Delivery. Kasjanusz nie śpi, nie śpisz i Ty, i Twój portfel. Rano będziecie żałować wszyscy troje.",
+      "comment": "23 minuty po północy. 89 złotych. Delivery. Dr. Spender nie śpi, nie śpisz i Ty, i Twój portfel. Rano będziecie żałować wszyscy troje.",
       "mood": "devastated"
     }
   ]

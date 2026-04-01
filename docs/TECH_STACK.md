@@ -1,4 +1,4 @@
-# Stack Technologiczny — Cashy
+# Stack Technologiczny — Spendr
 
 ## Mobile App — React Native + Expo
 
@@ -12,14 +12,14 @@
 **Kluczowe paczki mobilne:**
 ```
 expo@51
-expo-notifications        # Push notifications (Kasjanusz przerywa Twój dzień)
+expo-notifications        # Push notifications (Dr. Spender przerywa Twój dzień)
 expo-secure-store         # Tokeny OAuth banku
 expo-background-fetch     # Odpytywanie transakcji w tle
 expo-task-manager         # Zarządzanie taskami w tle
 @react-navigation/native  # Nawigacja
 zustand                   # State management (lekki, bez boilerplate)
 react-native-mmkv         # Szybki lokalny storage (szybszy od AsyncStorage)
-react-native-reanimated   # Animacje (Kasjanusz "wchodzi" animowany)
+react-native-reanimated   # Animacje (Dr. Spender "wchodzi" animowany)
 react-native-skia         # Wykresy i custom graphics
 victory-native            # Wykresy finansowe (linia, pie, bar)
 axios                     # HTTP client
@@ -81,10 +81,10 @@ model Transaction {
   createdAt     DateTime  @default(now())
   
   user          User      @relation(fields: [userId], references: [id])
-  comments      KasjanuszComment[]
+  comments      DrSpenderComment[][]
 }
 
-model KasjanuszComment {
+model DrSpenderComment {
   id            String      @id @default(uuid())
   transactionId String?
   userId        String
@@ -142,7 +142,7 @@ enum TransactionSource {
 - Dla tygodniowych podsumowań można użyć `claude-opus-4-6`
 
 **Podejście do promptów:**
-- System prompt z osobowością Kasjanusza (statyczny, cachowany)
+- System prompt z osobowością Dr. Spendera (statyczny, cachowany)
 - User prompt zawiera: kategorię, kwotę, historię kategorii z ostatnich 30 dni, wzorce
 - NIE wysyłamy surowych danych bankowych (numerów kont, IBAN) do API
 - Dane są agregowane i anonimizowane przed wysłaniem
@@ -165,7 +165,7 @@ enum TransactionSource {
 3. User przechodzi przez bank login (redirect/webview)
 4. Nordigen zwraca access token dla konta
 5. Backend odpytuje /transactions co X minut (background fetch)
-6. Nowe transakcje → analiza → komentarz Kasjanusza
+6. Nowe transakcje → analiza → komentarz Dr. Spendera
 ```
 
 **Fallback gdy brak Open Banking:**
@@ -181,7 +181,7 @@ Expo Push Service → FCM (Android) / APNs (iOS) → Urządzenie
 
 **Typy notyfikacji:**
 - `TRANSACTION_COMMENT` — po każdej transakcji
-- `WEEKLY_ROAST` — tygodniowe podsumowanie od Kasjanusza
+- `WEEKLY_ROAST` — tygodniowe podsumowanie od Dr. Spendera
 - `PATTERN_ALERT` — wykryto wzorzec marnowania
 - `ZOMBIE_SUBSCRIPTION` — subskrypcja której nie używasz
 
@@ -218,6 +218,6 @@ JWT_SECRET=...
 PORT=3000
 
 # Mobile (w Expo config)
-EXPO_PUBLIC_API_URL=https://api.cashy.app
+EXPO_PUBLIC_API_URL=https://api.spendr.app
 EXPO_PUBLIC_ENVIRONMENT=development
 ```

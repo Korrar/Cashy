@@ -1,4 +1,4 @@
-# Integracje zewnętrzne — Cashy
+# Integracje zewnętrzne — Spendr
 
 ## 1. Open Banking — Nordigen (GoCardless Bank Account Data)
 
@@ -41,7 +41,7 @@ GET https://ob.nordigen.com/api/v2/institutions/?country=PL
 Krok 5: Utwórz Requisition (żądanie dostępu do konta)
 POST https://ob.nordigen.com/api/v2/requisitions/
 {
-  "redirect": "cashy://bank-callback",
+  "redirect": "spendr://bank-callback",
   "institution_id": "PKO_BPKOPLPW",
   "reference": "user-{userId}",
   "user_language": "PL"
@@ -52,7 +52,7 @@ Krok 6: Użytkownik otwiera link (WebView lub external browser)
 → Loguje się do banku
 → Akceptuje dostęp do historii transakcji
 
-Krok 7: Redirect wraca do aplikacji (cashy://bank-callback?ref=req-xxx)
+Krok 7: Redirect wraca do aplikacji (spendr://bank-callback?ref=req-xxx)
 
 Krok 8: Pobierz konta
 GET https://ob.nordigen.com/api/v2/requisitions/{requisition_id}/
@@ -164,7 +164,7 @@ async function registerForPushNotifications(): Promise<string | null> {
 const message = {
   to: user.pushToken,
   sound: 'default',
-  title: 'Kasjanusz ma coś do powiedzenia',
+  title: 'Dr. Spender ma coś do powiedzenia',
   body: comment.content.slice(0, 100) + '...',
   data: {
     type: 'TRANSACTION_COMMENT',

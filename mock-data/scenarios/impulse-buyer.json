@@ -2,7 +2,7 @@
   "scenario": "impulse-buyer",
   "description": "Użytkownik który robi duże, impulsywne zakupy głównie w nocy i weekendy. Brak wzorca — czyste impulsy.",
   "expectedWasteScore": 68,
-  "expectedKasjanuszMood": "amused",
+  "expectedDrSpenderMood": "amused",
   "monthlyStats": {
     "totalSpent": 4560,
     "totalWasted": 1890,
@@ -112,20 +112,20 @@
       "confidence": 0.85
     }
   ],
-  "kasjanuszComments": [
+  "drSpenderComments": [
     {
       "transactionId": "mock-ib-001",
-      "comment": "01:23 w nocy. 349 złotych. Słuchawki. Kasjanusz zanotował że masz już słuchawki — widział je tydzień temu przy innym zakupie. Ale nocna logika jest niepodważalna.",
+      "comment": "01:23 w nocy. 349 złotych. Słuchawki. Dr. Spender zanotował że masz już słuchawki — widział je tydzień temu przy innym zakupie. Ale nocna logika jest niepodważalna.",
       "mood": "amused"
     },
     {
       "transactionId": "mock-ib-004",
-      "comment": "Kwadrans po północy. 567 złotych. Zalando. Z ciężkim sercem informuję że to już trzecia transakcja odzieżowa w tym miesiącu. Łącznie 915 złotych na ubrania. Kasjanusz nie ma już słów.",
+      "comment": "Kwadrans po północy. 567 złotych. Zalando. Z ciężkim sercem informuję że to już trzecia transakcja odzieżowa w tym miesiącu. Łącznie 915 złotych na ubrania. Dr. Spender nie ma już słów.",
       "mood": "devastated"
     },
     {
       "transactionId": "mock-ib-007",
-      "comment": "2:30 w nocy. Steam. 189 złotych. Trzy gry i DLC. Kasjanusz sprawdził — w Steam masz 47 nieukończonych gier. Ale te cztery nowe na pewno zmienią sytuację.",
+      "comment": "2:30 w nocy. Steam. 189 złotych. Trzy gry i DLC. Dr. Spender sprawdził — w Steam masz 47 nieukończonych gier. Ale te cztery nowe na pewno zmienią sytuację.",
       "mood": "amused"
     }
   ]

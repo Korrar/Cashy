@@ -1,4 +1,4 @@
-# Statystyki i Analizy Finansowe — Cashy
+# Statystyki i Analizy Finansowe — Spendr
 
 ## Metryki zbierane per transakcja
 
@@ -258,14 +258,14 @@ interface WeeklyReport {
   totalWasted: number;
   topWaste: Transaction[];        // top 3 największe "zmarnowania"
   improvementVsLastWeek?: number; // % zmniejszenia waste vs poprzedni tydzień
-  kasjanuszMonologue: string;     // długi komentarz z Claude API
+  drSpenderMonologue: string;     // długi komentarz z Claude API
   positiveNote?: string;          // jeśli coś dobrego się wydarzyło
 }
 ```
 
 Prompt do Claude dla tygodniowego raportu:
 ```
-Podsumuj tydzień finansowy użytkownika. Jesteś Kasjanuszem.
+Podsumuj tydzień finansowy użytkownika. Jesteś Dr. Spenderem.
 Masz dane: [dane tygodnia]
 Napisz dramatyczny, sarkastyczny ale konkretny podsumowanie (4-6 zdań).
 Wymień 2-3 konkretne transakcje po nazwie i kwocie.
