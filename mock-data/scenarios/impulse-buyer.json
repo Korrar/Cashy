@@ -1,0 +1,132 @@
+{
+  "scenario": "impulse-buyer",
+  "description": "Użytkownik który robi duże, impulsywne zakupy głównie w nocy i weekendy. Brak wzorca — czyste impulsy.",
+  "expectedWasteScore": 68,
+  "expectedKasjanuszMood": "amused",
+  "monthlyStats": {
+    "totalSpent": 4560,
+    "totalWasted": 1890,
+    "wastePercentage": 41.4
+  },
+  "transactions": [
+    {
+      "id": "mock-ib-001",
+      "amount": 349.00,
+      "currency": "PLN",
+      "category": "ELECTRONICS",
+      "merchant": "Allegro",
+      "description": "Słuchawki bezprzewodowe JBL",
+      "date": "2026-03-29T01:23:00Z",
+      "wasteScore": 90
+    },
+    {
+      "id": "mock-ib-002",
+      "amount": 89.00,
+      "currency": "PLN",
+      "category": "CLOTHING",
+      "merchant": "Reserved",
+      "date": "2026-03-28T22:45:00Z",
+      "wasteScore": 72
+    },
+    {
+      "id": "mock-ib-003",
+      "amount": 234.00,
+      "currency": "PLN",
+      "category": "ELECTRONICS",
+      "merchant": "RTV Euro AGD",
+      "description": "Kabel HDMI, podstawka do laptopa, mysz",
+      "date": "2026-03-27T19:00:00Z",
+      "wasteScore": 55
+    },
+    {
+      "id": "mock-ib-004",
+      "amount": 567.00,
+      "currency": "PLN",
+      "category": "CLOTHING",
+      "merchant": "Zalando",
+      "date": "2026-03-25T00:15:00Z",
+      "wasteScore": 95
+    },
+    {
+      "id": "mock-ib-005",
+      "amount": 78.00,
+      "currency": "PLN",
+      "category": "FOOD_RESTAURANT",
+      "merchant": "Pyszne.pl",
+      "date": "2026-03-24T23:50:00Z",
+      "wasteScore": 82
+    },
+    {
+      "id": "mock-ib-006",
+      "amount": 1200.00,
+      "currency": "PLN",
+      "category": "FOOD_GROCERY",
+      "merchant": "Lidl",
+      "date": "2026-03-20T11:00:00Z",
+      "wasteScore": 5
+    },
+    {
+      "id": "mock-ib-007",
+      "amount": 189.00,
+      "currency": "PLN",
+      "category": "ENTERTAINMENT",
+      "merchant": "Steam",
+      "description": "Gry: 3 tytuły + DLC",
+      "date": "2026-03-16T02:30:00Z",
+      "wasteScore": 88
+    },
+    {
+      "id": "mock-ib-008",
+      "amount": 450.00,
+      "currency": "PLN",
+      "category": "SPORT",
+      "merchant": "Decathlon",
+      "description": "Sprzęt do biegania (buty, koszulki)",
+      "date": "2026-03-14T15:00:00Z",
+      "wasteScore": 40
+    },
+    {
+      "id": "mock-ib-009",
+      "amount": 145.00,
+      "currency": "PLN",
+      "category": "ALCOHOL",
+      "merchant": "Winnica Kieliszki",
+      "date": "2026-03-13T20:00:00Z",
+      "wasteScore": 65
+    },
+    {
+      "id": "mock-ib-010",
+      "amount": 259.00,
+      "currency": "PLN",
+      "category": "CLOTHING",
+      "merchant": "H&M",
+      "date": "2026-03-08T13:00:00Z",
+      "wasteScore": 50
+    }
+  ],
+  "detectedPatterns": [
+    {
+      "type": "LATE_NIGHT_DELIVERY",
+      "description": "Zakupy online po 23:00 — 4 transakcje w miesiącu",
+      "monthlyCost": 689,
+      "confidence": 0.85
+    }
+  ],
+  "kasjanuszComments": [
+    {
+      "transactionId": "mock-ib-001",
+      "comment": "01:23 w nocy. 349 złotych. Słuchawki. Kasjanusz zanotował że masz już słuchawki — widział je tydzień temu przy innym zakupie. Ale nocna logika jest niepodważalna.",
+      "mood": "amused"
+    },
+    {
+      "transactionId": "mock-ib-004",
+      "comment": "Kwadrans po północy. 567 złotych. Zalando. Z ciężkim sercem informuję że to już trzecia transakcja odzieżowa w tym miesiącu. Łącznie 915 złotych na ubrania. Kasjanusz nie ma już słów.",
+      "mood": "devastated"
+    },
+    {
+      "transactionId": "mock-ib-007",
+      "comment": "2:30 w nocy. Steam. 189 złotych. Trzy gry i DLC. Kasjanusz sprawdził — w Steam masz 47 nieukończonych gier. Ale te cztery nowe na pewno zmienią sytuację.",
+      "mood": "amused"
+    }
+  ]
+}

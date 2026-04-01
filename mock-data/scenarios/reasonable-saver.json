@@ -1,0 +1,98 @@
+{
+  "scenario": "reasonable-saver",
+  "description": "Rozsądny użytkownik. Kasjanusz nie ma dużo do powiedzenia i jest z tego wyraźnie niezadowolony.",
+  "expectedWasteScore": 15,
+  "expectedKasjanuszMood": "ironically_pleased",
+  "monthlyStats": {
+    "totalSpent": 2100,
+    "totalWasted": 120,
+    "wastePercentage": 5.7
+  },
+  "transactions": [
+    {
+      "id": "mock-rs-001",
+      "amount": 850.00,
+      "currency": "PLN",
+      "category": "FOOD_GROCERY",
+      "merchant": "Biedronka + Lidl",
+      "date": "2026-03-28T10:00:00Z",
+      "wasteScore": 3
+    },
+    {
+      "id": "mock-rs-002",
+      "amount": 34.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Spotify",
+      "date": "2026-03-01T10:00:00Z",
+      "wasteScore": 10
+    },
+    {
+      "id": "mock-rs-003",
+      "amount": 120.00,
+      "currency": "PLN",
+      "category": "SPORT",
+      "merchant": "Siłownia FitTime — karnet",
+      "date": "2026-03-01T08:00:00Z",
+      "wasteScore": 5
+    },
+    {
+      "id": "mock-rs-004",
+      "amount": 45.00,
+      "currency": "PLN",
+      "category": "FOOD_RESTAURANT",
+      "merchant": "Restauracja urodziny",
+      "date": "2026-03-15T19:00:00Z",
+      "wasteScore": 10
+    },
+    {
+      "id": "mock-rs-005",
+      "amount": 600.00,
+      "currency": "PLN",
+      "category": "HEALTH",
+      "merchant": "Apteka + lekarz",
+      "date": "2026-03-12T11:00:00Z",
+      "wasteScore": 0
+    },
+    {
+      "id": "mock-rs-006",
+      "amount": 350.00,
+      "currency": "PLN",
+      "category": "TRANSPORT",
+      "merchant": "PKP + MZA",
+      "date": "2026-03-05T07:00:00Z",
+      "wasteScore": 3
+    },
+    {
+      "id": "mock-rs-007",
+      "amount": 28.00,
+      "currency": "PLN",
+      "category": "COFFEE",
+      "merchant": "Kawiarnia lokalna",
+      "description": "Raz w tygodniu, spotkanie z przyjacielem",
+      "date": "2026-03-22T14:00:00Z",
+      "wasteScore": 18
+    },
+    {
+      "id": "mock-rs-008",
+      "amount": 72.00,
+      "currency": "PLN",
+      "category": "ENTERTAINMENT",
+      "merchant": "Kino + książka",
+      "date": "2026-03-19T17:00:00Z",
+      "wasteScore": 15
+    }
+  ],
+  "kasjanuszComments": [
+    {
+      "trigger": "monthly_summary",
+      "comment": "Hmm. Kasjanusz przegląda Twoje transakcje po raz trzeci. Nie może uwierzyć. Tylko 120 złotych zmarnowane w całym miesiącu? To... to prawie rozczarowujące. Kasjanusz jest niemal bez zajęcia. Prawie.",
+      "mood": "ironically_pleased"
+    },
+    {
+      "transactionId": "mock-rs-007",
+      "comment": "Kawa raz w tygodniu ze znajomym. 28 złotych. Kasjanusz to odnotowuje z mieszaniną szacunku i rozczarowania. Nie mam tu czego kąsać.",
+      "mood": "calm"
+    }
+  ]
+}

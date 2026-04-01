@@ -1,0 +1,194 @@
+{
+  "scenario": "subscription-zombie",
+  "description": "Użytkownik z 12 subskrypcjami, z czego 7 to zombie (nieużywane > 30 dni). Płaci za serwisy o których zapomniał.",
+  "expectedWasteScore": 78,
+  "expectedKasjanuszMood": "devastated",
+  "monthlyStats": {
+    "totalSpent": 2890,
+    "totalWasted": 520,
+    "wastePercentage": 18.0
+  },
+  "transactions": [
+    {
+      "id": "mock-sz-001",
+      "amount": 49.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Netflix",
+      "date": "2026-03-01T10:00:00Z",
+      "wasteScore": 20,
+      "subscriptionMeta": {
+        "isZombie": false,
+        "daysSinceLastUse": 3,
+        "monthlyUsageSessions": 12
+      }
+    },
+    {
+      "id": "mock-sz-002",
+      "amount": 34.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Spotify",
+      "date": "2026-03-01T10:00:00Z",
+      "wasteScore": 10,
+      "subscriptionMeta": {
+        "isZombie": false,
+        "daysSinceLastUse": 1,
+        "monthlyUsageSessions": 30
+      }
+    },
+    {
+      "id": "mock-sz-003",
+      "amount": 29.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "HBO Max",
+      "date": "2026-03-03T10:00:00Z",
+      "wasteScore": 85,
+      "subscriptionMeta": {
+        "isZombie": true,
+        "daysSinceLastUse": 47,
+        "monthlyUsageSessions": 0
+      }
+    },
+    {
+      "id": "mock-sz-004",
+      "amount": 42.00,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Canal+",
+      "date": "2026-03-05T10:00:00Z",
+      "wasteScore": 90,
+      "subscriptionMeta": {
+        "isZombie": true,
+        "daysSinceLastUse": 63,
+        "monthlyUsageSessions": 0
+      }
+    },
+    {
+      "id": "mock-sz-005",
+      "amount": 39.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Adobe Creative Cloud",
+      "date": "2026-03-06T10:00:00Z",
+      "wasteScore": 75,
+      "subscriptionMeta": {
+        "isZombie": true,
+        "daysSinceLastUse": 38,
+        "monthlyUsageSessions": 1
+      }
+    },
+    {
+      "id": "mock-sz-006",
+      "amount": 9.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Duolingo Plus",
+      "date": "2026-03-07T10:00:00Z",
+      "wasteScore": 88,
+      "subscriptionMeta": {
+        "isZombie": true,
+        "daysSinceLastUse": 94,
+        "monthlyUsageSessions": 0,
+        "comment": "Kupiłeś w nowy rok. Użyłeś 3 razy."
+      }
+    },
+    {
+      "id": "mock-sz-007",
+      "amount": 24.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Xbox Game Pass",
+      "date": "2026-03-10T10:00:00Z",
+      "wasteScore": 80,
+      "subscriptionMeta": {
+        "isZombie": true,
+        "daysSinceLastUse": 55,
+        "monthlyUsageSessions": 0
+      }
+    },
+    {
+      "id": "mock-sz-008",
+      "amount": 19.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "LinkedIn Premium",
+      "date": "2026-03-15T10:00:00Z",
+      "wasteScore": 70,
+      "subscriptionMeta": {
+        "isZombie": true,
+        "daysSinceLastUse": 71,
+        "monthlyUsageSessions": 0
+      }
+    },
+    {
+      "id": "mock-sz-009",
+      "amount": 14.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Apple iCloud+ 200GB",
+      "date": "2026-03-15T10:00:00Z",
+      "wasteScore": 15,
+      "subscriptionMeta": {
+        "isZombie": false,
+        "daysSinceLastUse": 0,
+        "monthlyUsageSessions": 30
+      }
+    },
+    {
+      "id": "mock-sz-010",
+      "amount": 29.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Audible",
+      "date": "2026-03-18T10:00:00Z",
+      "wasteScore": 72,
+      "subscriptionMeta": {
+        "isZombie": true,
+        "daysSinceLastUse": 112,
+        "monthlyUsageSessions": 0,
+        "comment": "4 miesiące. Zero audiobooków. Kredyty się kumulują."
+      }
+    },
+    {
+      "id": "mock-sz-011",
+      "amount": 1200.00,
+      "currency": "PLN",
+      "category": "FOOD_GROCERY",
+      "merchant": "Kaufland",
+      "date": "2026-03-10T14:00:00Z",
+      "wasteScore": 5
+    },
+    {
+      "id": "mock-sz-012",
+      "amount": 450.00,
+      "currency": "PLN",
+      "category": "TRANSPORT",
+      "merchant": "PKP Intercity",
+      "date": "2026-03-08T09:00:00Z",
+      "wasteScore": 5
+    }
+  ],
+  "zombieSummary": {
+    "totalZombies": 7,
+    "monthlyZombieCost": 207.94,
+    "annualZombieCost": 2495.28,
+    "oldestZombie": {
+      "merchant": "Audible",
+      "daysSinceLastUse": 112
+    }
+  },
+  "kasjanuszComments": [
+    {
+      "transactionId": "mock-sz-006",
+      "comment": "Duolingo Plus. 9 złotych i 99 groszy za naukę języka którego nie uczysz się od 94 dni. Nowy Rok, nowe postanowienia. Kasjanusz widział to już wiele razy.",
+      "mood": "devastated"
+    },
+    {
+      "transactionId": "mock-sz-010",
+      "comment": "Audible. Czwarty miesiąc z rzędu. Kredyty na audiobooki kumulują się jak nieotwarta poczta. 29 złotych za wyrzuty sumienia — to nawet uczciwa cena.",
+      "mood": "amused"
+    }
+  ]
+}

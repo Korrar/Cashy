@@ -1,0 +1,184 @@
+{
+  "scenario": "coffee-addict",
+  "description": "Użytkownik który wydaje ~500 PLN/mies na kawę i fast food. Pracuje w biurze, codziennie rano Starbucks, w piątki McDonalds.",
+  "expectedWasteScore": 72,
+  "expectedKasjanuszMood": "amused",
+  "monthlyStats": {
+    "totalSpent": 3240,
+    "totalWasted": 680,
+    "wastePercentage": 20.9
+  },
+  "transactions": [
+    {
+      "id": "mock-ca-001",
+      "amount": 28.50,
+      "currency": "PLN",
+      "category": "COFFEE",
+      "merchant": "Starbucks Centrum Warszawa",
+      "description": "Zakup przy użyciu karty",
+      "date": "2026-03-28T08:15:00Z",
+      "wasteScore": 75
+    },
+    {
+      "id": "mock-ca-002",
+      "amount": 28.50,
+      "currency": "PLN",
+      "category": "COFFEE",
+      "merchant": "Starbucks Galeria Mokotów",
+      "description": "Zakup przy użyciu karty",
+      "date": "2026-03-27T09:05:00Z",
+      "wasteScore": 75
+    },
+    {
+      "id": "mock-ca-003",
+      "amount": 24.00,
+      "currency": "PLN",
+      "category": "COFFEE",
+      "merchant": "Costa Coffee Złote Tarasy",
+      "date": "2026-03-26T08:45:00Z",
+      "wasteScore": 68
+    },
+    {
+      "id": "mock-ca-004",
+      "amount": 67.50,
+      "currency": "PLN",
+      "category": "FOOD_RESTAURANT",
+      "merchant": "McDonald's Al. Jerozolimskie",
+      "description": "Płatność zbliżeniowa",
+      "date": "2026-03-27T13:20:00Z",
+      "wasteScore": 60
+    },
+    {
+      "id": "mock-ca-005",
+      "amount": 134.20,
+      "currency": "PLN",
+      "category": "FOOD_GROCERY",
+      "merchant": "Biedronka",
+      "date": "2026-03-25T18:30:00Z",
+      "wasteScore": 8
+    },
+    {
+      "id": "mock-ca-006",
+      "amount": 28.50,
+      "currency": "PLN",
+      "category": "COFFEE",
+      "merchant": "Starbucks Centrum Warszawa",
+      "date": "2026-03-25T08:10:00Z",
+      "wasteScore": 78
+    },
+    {
+      "id": "mock-ca-007",
+      "amount": 49.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Netflix",
+      "date": "2026-03-24T10:00:00Z",
+      "wasteScore": 45
+    },
+    {
+      "id": "mock-ca-008",
+      "amount": 22.00,
+      "currency": "PLN",
+      "category": "TRANSPORT",
+      "merchant": "Bolt",
+      "date": "2026-03-24T23:15:00Z",
+      "wasteScore": 20
+    },
+    {
+      "id": "mock-ca-009",
+      "amount": 89.00,
+      "currency": "PLN",
+      "category": "FOOD_RESTAURANT",
+      "merchant": "Pyszne.pl",
+      "description": "Zamówienie online",
+      "date": "2026-03-22T23:47:00Z",
+      "wasteScore": 85
+    },
+    {
+      "id": "mock-ca-010",
+      "amount": 28.50,
+      "currency": "PLN",
+      "category": "COFFEE",
+      "merchant": "Starbucks Centrum Warszawa",
+      "date": "2026-03-22T08:20:00Z",
+      "wasteScore": 80
+    },
+    {
+      "id": "mock-ca-011",
+      "amount": 450.00,
+      "currency": "PLN",
+      "category": "CLOTHING",
+      "merchant": "Zalando",
+      "date": "2026-03-21T14:00:00Z",
+      "wasteScore": 55
+    },
+    {
+      "id": "mock-ca-012",
+      "amount": 34.99,
+      "currency": "PLN",
+      "category": "SUBSCRIPTION",
+      "merchant": "Spotify",
+      "date": "2026-03-20T09:00:00Z",
+      "wasteScore": 15
+    },
+    {
+      "id": "mock-ca-013",
+      "amount": 56.00,
+      "currency": "PLN",
+      "category": "FOOD_RESTAURANT",
+      "merchant": "McDonald's",
+      "date": "2026-03-20T12:45:00Z",
+      "wasteScore": 58
+    },
+    {
+      "id": "mock-ca-014",
+      "amount": 200.00,
+      "currency": "PLN",
+      "category": "FOOD_GROCERY",
+      "merchant": "Carrefour",
+      "date": "2026-03-18T17:00:00Z",
+      "wasteScore": 5
+    },
+    {
+      "id": "mock-ca-015",
+      "amount": 28.50,
+      "currency": "PLN",
+      "category": "COFFEE",
+      "merchant": "Starbucks Centrum Warszawa",
+      "date": "2026-03-17T08:30:00Z",
+      "wasteScore": 75
+    }
+  ],
+  "detectedPatterns": [
+    {
+      "type": "MORNING_COFFEE",
+      "description": "Kawa w Starbucks prawie każdego dnia roboczego (~28 PLN)",
+      "monthlyCost": 560,
+      "confidence": 0.92
+    },
+    {
+      "type": "LATE_NIGHT_DELIVERY",
+      "description": "Zamówienia online po 23:00 (~2-3 razy w miesiącu)",
+      "monthlyCost": 178,
+      "confidence": 0.70
+    },
+    {
+      "type": "FRIDAY_TAKEOUT",
+      "description": "McDonald's w piątki w porze lunchu",
+      "monthlyCost": 245,
+      "confidence": 0.75
+    }
+  ],
+  "kasjanuszComments": [
+    {
+      "transactionId": "mock-ca-001",
+      "comment": "Czwarta kawa za zewnątrz w tym tygodniu. W sumie 112 złotych i 50 groszy. Za te pieniądze mógłbyś kupić kilogram porządnej kawy i nie widywać mnie przez miesiąc. Ale widzimy się codziennie.",
+      "mood": "amused"
+    },
+    {
+      "transactionId": "mock-ca-009",
+      "comment": "23 minuty po północy. 89 złotych. Delivery. Kasjanusz nie śpi, nie śpisz i Ty, i Twój portfel. Rano będziecie żałować wszyscy troje.",
+      "mood": "devastated"
+    }
+  ]
+}
