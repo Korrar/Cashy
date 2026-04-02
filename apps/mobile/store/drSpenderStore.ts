@@ -3,25 +3,33 @@ import { api } from '../services/api'
 
 export interface DrSpenderComment {
   id: string
-  text: string
+  text: string           // mapped from DB `content`
   mood: string
-  wasteScore: number
+  wasteScore: number     // from linked transaction
   transactionId: string | null
   createdAt: string
-  isRead: boolean
+  isRead: boolean        // mapped from DB `wasRead`
 }
 
 export interface Suggestion {
   id: string
   type: string
   title: string
-  description: string
+  description: string    // mapped from DB `howTo`
+  drSpenderQuip: string
   annualSavings: number
+  monthlySavings: number
   confidence: number
   status: 'ACTIVE' | 'ACCEPTED' | 'DISMISSED' | 'EXPIRED'
   actionLabel: string | null
   actionUrl: string | null
+  equivalentPurchase: string | null
   createdAt: string
+}
+
+interface SuggestionsResponse {
+  suggestions: Suggestion[]
+  totalPotentialSavings: number
 }
 
 interface DrSpenderState {
@@ -59,8 +67,8 @@ export const useDrSpenderStore = create<DrSpenderState>((set, get) => ({
 
   async fetchSuggestions() {
     try {
-      const { data } = await api.get<Suggestion[]>('/suggestions')
-      set({ suggestions: data })
+      const { data } = await api.get<SuggestionsResponse>('/suggestions')
+      set({ suggestions: data.suggestions })
     } catch {
       // ignore
     }

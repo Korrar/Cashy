@@ -1,6 +1,4 @@
 import { Router } from 'express'
-import { z } from 'zod'
-import { SuggestionStatus } from '@prisma/client'
 import { requireAuth, type AuthRequest } from '../middleware/auth'
 import { prisma } from '../lib/prisma'
 
@@ -17,9 +15,26 @@ suggestionsRouter.get('/', async (req, res) => {
     take: 10,
   })
 
+  // Map Prisma fields → mobile DTO
+  const result = suggestions.map(sg => ({
+    id:            sg.id,
+    type:          sg.type,
+    title:         sg.title,
+    description:   sg.howTo,                 // howTo → description (main actionable text)
+    drSpenderQuip: sg.drSpenderQuip,         // sarcastic comment from Dr. Spender
+    annualSavings: sg.annualSavings,
+    monthlySavings:sg.monthlySavings,
+    confidence:    sg.confidence,
+    status:        sg.status,
+    actionLabel:   sg.actionLabel,
+    actionUrl:     sg.actionUrl,
+    equivalentPurchase: sg.equivalentPurchase,
+    createdAt:     sg.createdAt.toISOString(),
+  }))
+
   const totalPotentialSavings = suggestions.reduce((s, sg) => s + sg.monthlySavings, 0)
 
-  return res.json({ suggestions, totalPotentialSavings })
+  return res.json({ suggestions: result, totalPotentialSavings })
 })
 
 // PATCH /suggestions/:id/accept

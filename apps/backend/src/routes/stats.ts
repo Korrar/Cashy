@@ -8,18 +8,21 @@ import { getComments, markCommentRead } from '../services/DrSpenderService'
 export const statsRouter = Router()
 statsRouter.use(requireAuth)
 
-// GET /stats/monthly?year=2026&month=3
+// GET /stats/monthly?month=yyyy-MM  (defaults to current month)
 statsRouter.get('/monthly', async (req, res) => {
   const parsed = z.object({
-    year:  z.coerce.number().int().min(2020).max(2030),
-    month: z.coerce.number().int().min(1).max(12),
+    month: z.string().regex(/^\d{4}-\d{2}$/).optional(),
   }).safeParse(req.query)
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() })
 
   const { userId } = req as AuthRequest
-  const { year, month } = parsed.data
-  const cacheKey = `stats:monthly:${userId}:${year}-${month}`
 
+  const now = new Date()
+  const [yearStr, monthStr] = (parsed.data.month ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`).split('-')
+  const year  = Number(yearStr)
+  const month = Number(monthStr)
+
+  const cacheKey = `stats:monthly:${userId}:${year}-${month}`
   const cached = await cacheGet(cacheKey)
   if (cached) return res.json(cached)
 
@@ -28,45 +31,80 @@ statsRouter.get('/monthly', async (req, res) => {
 
   const transactions = await prisma.transaction.findMany({
     where: { userId, date: { gte: from, lte: to } },
+    orderBy: { date: 'asc' },
   })
 
   const totalSpent  = transactions.reduce((s, t) => s + t.amount, 0)
   const totalWasted = transactions.filter(t => t.isWasted).reduce((s, t) => s + t.amount, 0)
 
-  // Group by category
-  const byCategory = transactions.reduce((acc, t) => {
-    const cat = acc[t.category] ?? { total: 0, count: 0, wasted: 0 }
-    cat.total  += t.amount
-    cat.count  += 1
-    cat.wasted += t.isWasted ? t.amount : 0
-    acc[t.category] = cat
+  // Waste score — average of analyzed transactions (null wasteScore = not yet analyzed)
+  const analyzed = transactions.filter(t => t.wasteScore != null)
+  const wasteScore = analyzed.length > 0
+    ? Math.round(analyzed.reduce((s, t) => s + (t.wasteScore ?? 0), 0) / analyzed.length)
+    : 0
+
+  // Burn rate — daily spend based on days elapsed in month
+  const today = new Date()
+  const daysElapsed = year === today.getFullYear() && month === today.getMonth() + 1
+    ? Math.max(1, today.getDate())
+    : new Date(year, month, 0).getDate()   // full month if historical
+  const burnRate = totalSpent / daysElapsed
+
+  // Forecast — project burn rate to end of month (only for current month)
+  const daysInMonth = new Date(year, month, 0).getDate()
+  const isCurrentMonth = year === today.getFullYear() && month === today.getMonth() + 1
+  const forecast = isCurrentMonth ? Math.round(burnRate * daysInMonth) : null
+
+  // Latte factor — small recurring daily purchases annualized
+  // Uses coffee + food_restaurant combined as "latte factor" proxy
+  const smallRecurring = transactions
+    .filter(t => ['COFFEE', 'FOOD_RESTAURANT'].includes(t.category))
+    .reduce((s, t) => s + t.amount, 0)
+  const latteFactor = smallRecurring > 0 ? Math.round(smallRecurring * 12) : null
+
+  // FIRE impact — annual waste × 25 (4% rule: how much you'd need to fund this waste forever)
+  const annualWaste  = totalWasted * 12
+  const fireImpact   = totalWasted > 0 ? Math.round(annualWaste * 25) : null
+
+  // byCategory as array for mobile
+  const byCategoryMap = transactions.reduce((acc, t) => {
+    const entry = acc[t.category] ?? { category: t.category, total: 0, count: 0, wasteScoreSum: 0, wasteScoreCount: 0 }
+    entry.total += t.amount
+    entry.count += 1
+    if (t.wasteScore != null) {
+      entry.wasteScoreSum   += t.wasteScore
+      entry.wasteScoreCount += 1
+    }
+    acc[t.category] = entry
     return acc
-  }, {} as Record<string, { total: number; count: number; wasted: number }>)
+  }, {} as Record<string, { category: string; total: number; count: number; wasteScoreSum: number; wasteScoreCount: number }>)
 
-  // Compare to previous month
-  const prevFrom = new Date(year, month - 2, 1)
-  const prevTo   = new Date(year, month - 1, 0, 23, 59, 59)
-  const prevAgg  = await prisma.transaction.aggregate({
-    where: { userId, date: { gte: prevFrom, lte: prevTo } },
-    _sum: { amount: true },
-  })
-  const prevTotal = prevAgg._sum.amount ?? 0
+  const byCategory = Object.values(byCategoryMap)
+    .map(({ wasteScoreSum, wasteScoreCount, ...rest }) => ({
+      ...rest,
+      wasteScore: wasteScoreCount > 0 ? Math.round(wasteScoreSum / wasteScoreCount) : 0,
+    }))
+    .sort((a, b) => b.total - a.total)
 
-  // Waste equivalents
+  // Waste equivalents (what you could have bought instead)
   const equivalents = buildEquivalents(totalWasted)
 
   const data = {
-    year, month,
+    month: `${year}-${String(month).padStart(2, '0')}`,
     totalSpent,
     totalWasted,
-    wastePercentage: totalSpent > 0 ? (totalWasted / totalSpent) * 100 : 0,
-    vsLastMonth: { prevTotal, diff: totalSpent - prevTotal, diffPct: prevTotal > 0 ? ((totalSpent - prevTotal) / prevTotal) * 100 : 0 },
-    byCategory,
-    equivalents,
+    wasteScore,
     transactionCount: transactions.length,
+    byCategory,
+    burnRate:    Math.round(burnRate * 100) / 100,
+    forecast,
+    latteFactor,
+    fireImpact,
+    equivalents,
+    wastePercentage: totalSpent > 0 ? (totalWasted / totalSpent) * 100 : 0,
   }
 
-  await cacheSet(cacheKey, data, 60 * 10)  // 10 min cache
+  await cacheSet(cacheKey, data, 60 * 10)
   return res.json(data)
 })
 
@@ -74,7 +112,6 @@ statsRouter.get('/monthly', async (req, res) => {
 statsRouter.get('/subscriptions', async (req, res) => {
   const { userId } = req as AuthRequest
 
-  // Last 90 days of SUBSCRIPTION transactions
   const ninetyDaysAgo = new Date()
   ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90)
 
@@ -83,7 +120,6 @@ statsRouter.get('/subscriptions', async (req, res) => {
     orderBy: { date: 'desc' },
   })
 
-  // Import RecurrenceDetector to analyse
   const { RecurrenceDetector } = await import('../analytics')
   const detector = new RecurrenceDetector()
   const recurring = detector.detectRecurring(subTxns.map(t => ({
@@ -93,17 +129,20 @@ statsRouter.get('/subscriptions', async (req, res) => {
     wasteScore: t.wasteScore, isWasted: t.isWasted,
   })))
 
-  const zombies = recurring.filter(r => r.isZombie)
+  // Return array of subscription DTOs directly — mobile expects Subscription[]
+  const result = recurring.map(r => ({
+    merchant:      r.merchant,
+    category:      'SUBSCRIPTION',
+    amount:        r.monthlyEquivalent,
+    interval:      r.interval,
+    isZombie:      r.isZombie,
+    lastUsed:      r.lastUsed?.toISOString() ?? null,
+  }))
 
-  return res.json({
-    all: recurring,
-    zombies,
-    totalMonthly:      recurring.reduce((s, r) => s + r.monthlyEquivalent, 0),
-    totalMonthlyZombie: zombies.reduce((s, r) => s + r.monthlyEquivalent, 0),
-  })
+  return res.json(result)
 })
 
-// GET /dr-spender/comments
+// GET /stats/comments
 statsRouter.get('/comments', async (req, res) => {
   const parsed = z.object({
     limit:  z.coerce.number().int().min(1).max(50).default(20),
@@ -112,11 +151,23 @@ statsRouter.get('/comments', async (req, res) => {
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() })
 
   const { userId } = req as AuthRequest
-  const comments = await getComments(userId, parsed.data.limit, parsed.data.offset)
-  return res.json({ comments })
+  const raw = await getComments(userId, parsed.data.limit, parsed.data.offset)
+
+  // Map Prisma fields → mobile DTO
+  const comments = raw.map(c => ({
+    id:            c.id,
+    text:          c.content,                          // content → text
+    mood:          c.mood,
+    wasteScore:    c.transaction?.wasteScore ?? 0,     // pull from linked transaction
+    transactionId: c.transactionId,
+    createdAt:     c.createdAt.toISOString(),
+    isRead:        c.wasRead,                          // wasRead → isRead
+  }))
+
+  return res.json(comments)   // return array directly, not wrapped
 })
 
-// PATCH /dr-spender/comments/:id/read
+// PATCH /stats/comments/:id/read
 statsRouter.patch('/comments/:id/read', async (req, res) => {
   const { userId } = req as AuthRequest
   await markCommentRead(req.params.id, userId)
@@ -131,9 +182,9 @@ function buildEquivalents(amount: number) {
     { name: 'bilet do kina',                  price: 30   },
     { name: 'obiad dla dwóch',                price: 100  },
     { name: 'miesięczny karnet na siłownię',  price: 120  },
-    { name: 'lot do Barcelony i z powrotem',  price: 500  },
     { name: 'nowy ekspres Nespresso',         price: 350  },
     { name: 'weekend w hotelu',               price: 400  },
+    { name: 'lot do Barcelony i z powrotem',  price: 500  },
   ]
   return items
     .filter(i => amount >= i.price)

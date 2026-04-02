@@ -9,6 +9,7 @@ export const authRouter = Router()
 const registerSchema = z.object({
   email:    z.string().email(),
   password: z.string().min(8),
+  name:     z.string().min(1).max(80).optional(),
 })
 
 const loginSchema = z.object({
@@ -23,7 +24,7 @@ authRouter.post('/register', async (req, res) => {
     return res.status(400).json({ error: parsed.error.flatten() })
   }
 
-  const { email, password } = parsed.data
+  const { email, password, name } = parsed.data
   const existing = await prisma.user.findUnique({ where: { email } })
   if (existing) {
     return res.status(409).json({ error: 'Email already in use' })
@@ -33,10 +34,11 @@ authRouter.post('/register', async (req, res) => {
   const user = await prisma.user.create({
     data: {
       email,
+      name,
       passwordHash,
       settings: { create: {} },
     },
-    select: { id: true, email: true, createdAt: true },
+    select: { id: true, email: true, name: true, createdAt: true },
   })
 
   const token = signToken(user.id)
@@ -63,7 +65,7 @@ authRouter.post('/login', async (req, res) => {
 
   const token = signToken(user.id)
   return res.json({
-    user: { id: user.id, email: user.email },
+    user: { id: user.id, email: user.email, name: user.name ?? email.split('@')[0] },
     token,
   })
 })

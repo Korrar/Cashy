@@ -5,6 +5,15 @@ import cors from 'cors'
 import { rateLimit } from 'express-rate-limit'
 import cron from 'node-cron'
 
+// ── Validate required env vars before anything else ───────────
+const REQUIRED_ENV = ['DATABASE_URL', 'REDIS_URL', 'JWT_SECRET', 'ANTHROPIC_API_KEY'] as const
+const missingEnv = REQUIRED_ENV.filter((key) => !process.env[key])
+if (missingEnv.length > 0) {
+  console.error(`[Spendr API] Missing required environment variables: ${missingEnv.join(', ')}`)
+  console.error('[Spendr API] Copy .env.example to .env and fill in the values.')
+  process.exit(1)
+}
+
 import { connectRedis } from './lib/redis'
 import { prisma } from './lib/prisma'
 import { authRouter }         from './routes/auth'

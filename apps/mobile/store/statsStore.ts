@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { format, subMonths } from 'date-fns'
 import { api } from '../services/api'
 import type { Category } from '../constants/categories'
 
@@ -10,20 +11,22 @@ export interface CategoryStat {
 }
 
 export interface MonthlyStats {
-  month: string
+  month: string           // "yyyy-MM"
   totalSpent: number
   totalWasted: number
   wasteScore: number
   transactionCount: number
   byCategory: CategoryStat[]
+  burnRate: number
   forecast: number | null
   latteFactor: number | null
   fireImpact: number | null
-  burnRate: number
+  wastePercentage: number
+  equivalents: Array<{ name: string; price: number; quantity: number }>
 }
 
 export interface Subscription {
-  merchant: string
+  merchant: string | null
   category: Category
   amount: number
   interval: string
@@ -36,7 +39,7 @@ interface StatsState {
   subscriptions: Subscription[]
   isLoading: boolean
 
-  fetchMonthly: (month?: string) => Promise<void>
+  fetchMonthly: (monthOffset?: number) => Promise<void>
   fetchSubscriptions: () => Promise<void>
 }
 
@@ -45,11 +48,11 @@ export const useStatsStore = create<StatsState>((set) => ({
   subscriptions: [],
   isLoading: false,
 
-  async fetchMonthly(month) {
+  async fetchMonthly(monthOffset = 0) {
     set({ isLoading: true })
     try {
-      const params = month ? { month } : {}
-      const { data } = await api.get<MonthlyStats>('/stats/monthly', { params })
+      const month = format(subMonths(new Date(), monthOffset), 'yyyy-MM')
+      const { data } = await api.get<MonthlyStats>('/stats/monthly', { params: { month } })
       set({ monthly: data, isLoading: false })
     } catch {
       set({ isLoading: false })

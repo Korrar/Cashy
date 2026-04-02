@@ -28,14 +28,14 @@ export default function DashboardScreen() {
   const recentTxs     = txs.slice(0, 5)
 
   useEffect(() => {
-    fetchMonthly()
+    fetchMonthly(0)
     fetchTxs(true)
     fetchComments()
     fetchSuggestions()
   }, [])
 
   const refresh = async () => {
-    await Promise.all([fetchMonthly(), fetchTxs(true), fetchComments()])
+    await Promise.all([fetchMonthly(0), fetchTxs(true), fetchComments()])
   }
 
   const monthLabel = format(new Date(), 'LLLL yyyy', { locale: pl })

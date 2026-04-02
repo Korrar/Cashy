@@ -12,19 +12,14 @@ import { CATEGORY_META } from '../../constants/categories'
 import { WasteScoreGauge } from '../../components/ui/WasteScoreGauge'
 import { TransactionItem } from '../../components/transactions/TransactionItem'
 
-function monthParam(offset: number) {
-  return format(subMonths(new Date(), offset), 'yyyy-MM')
-}
-
 export default function StatsScreen() {
   const [monthOffset, setMonthOffset] = useState(0)
   const { monthly, subscriptions, fetchMonthly, fetchSubscriptions, isLoading } = useStatsStore()
   const { items: txs, fetch: fetchTxs, hasMore } = useTransactionsStore()
 
-  const currentMonth = monthParam(monthOffset)
-  const monthLabel   = format(subMonths(new Date(), monthOffset), 'LLLL yyyy', { locale: pl })
+  const monthLabel = format(subMonths(new Date(), monthOffset), 'LLLL yyyy', { locale: pl })
 
-  useEffect(() => { fetchMonthly(currentMonth); fetchSubscriptions() }, [monthOffset])
+  useEffect(() => { fetchMonthly(monthOffset); fetchSubscriptions() }, [monthOffset])
   useEffect(() => { fetchTxs(true) }, [])
 
   const zombies = subscriptions.filter((s) => s.isZombie)
@@ -36,7 +31,7 @@ export default function StatsScreen() {
         refreshControl={
           <RefreshControl
             refreshing={isLoading}
-            onRefresh={() => fetchMonthly(currentMonth)}
+            onRefresh={() => fetchMonthly(monthOffset)}
             tintColor={colors.accentLight}
           />
         }

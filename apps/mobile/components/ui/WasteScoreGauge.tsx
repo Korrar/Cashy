@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native'
-import Svg, { Path, Circle } from 'react-native-svg'
+import Svg, { Circle } from 'react-native-svg'
 import { colors, fontFamily, fontSize } from '../../constants/theme'
 
 interface Props {
