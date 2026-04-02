@@ -1,0 +1,216 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── User ────────────────────────────────────────────────────
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  settings     UserSettings?
+  transactions Transaction[]
+  bankAccounts BankAccount[]
+  comments     DrSpenderComment[]
+  suggestions  Suggestion[]
+
+  @@index([email])
+}
+
+model UserSettings {
+  id                      String   @id @default(uuid())
+  userId                  String   @unique
+  monthlyNetIncome        Float?
+  monthlyBudget           Float?
+  aggressiveness          Aggressiveness @default(NORMAL)
+  notificationFrequency   NotificationFrequency @default(IMPORTANT_ONLY)
+  quietHoursStart         Int?     // hour 0-23
+  quietHoursEnd           Int?
+  // JSON: { "COFFEE": 200, "FOOD_RESTAURANT": 400 }
+  categoryBudgets         Json     @default("{}")
+  pushToken               String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─── Transactions ─────────────────────────────────────────────
+
+model Transaction {
+  id          String            @id @default(uuid())
+  userId      String
+  amount      Float
+  currency    String            @default("PLN")
+  category    Category
+  merchant    String?
+  description String?
+  date        DateTime
+  source      TransactionSource
+  // Analytics output — populated by AnalyticsPipeline via Bull job
+  wasteScore  Float?
+  isWasted    Boolean           @default(false)
+  // Raw bank data (Nordigen) — never sent to Claude API
+  rawData     Json?
+  // Dedup key for bank imports
+  externalId  String?
+  createdAt   DateTime          @default(now())
+
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments    DrSpenderComment[]
+  suggestions Suggestion[]
+
+  @@unique([userId, externalId])
+  @@index([userId, date(sort: Desc)])
+  @@index([userId, category, date(sort: Desc)])
+}
+
+// ─── Dr. Spender Comments ─────────────────────────────────────
+
+model DrSpenderComment {
+  id            String      @id @default(uuid())
+  userId        String
+  transactionId String?
+  content       String
+  type          CommentType
+  mood          Mood
+  wasRead       Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transaction Transaction? @relation(fields: [transactionId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([userId, wasRead])
+}
+
+// ─── Suggestions ──────────────────────────────────────────────
+
+model Suggestion {
+  id                    String           @id @default(uuid())
+  userId                String
+  type                  SuggestionType
+  status                SuggestionStatus @default(ACTIVE)
+  title                 String
+  monthlySavings        Float
+  annualSavings         Float
+  howTo                 String
+  drSpenderQuip         String
+  actionLabel           String?
+  actionUrl             String?
+  equivalentPurchase    String?
+  confidence            Float
+  // JSON array of transaction IDs
+  relatedTransactionIds Json             @default("[]")
+  // Outcome tracking
+  acceptedAt            DateTime?
+  // Category spend 30 days after acceptance vs before
+  outcomeSpendBefore    Float?
+  outcomeSpendAfter     Float?
+  expiresAt             DateTime?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@index([userId, status])
+  @@index([userId, createdAt(sort: Desc)])
+}
+
+// ─── Bank Accounts ────────────────────────────────────────────
+
+model BankAccount {
+  id            String    @id @default(uuid())
+  userId        String
+  nordigenId    String    @unique
+  institutionId String
+  name          String
+  currency      String    @default("PLN")
+  iban          String?
+  lastSyncedAt  DateTime?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ─── Enums ────────────────────────────────────────────────────
+
+enum Category {
+  FOOD_RESTAURANT
+  FOOD_GROCERY
+  COFFEE
+  ALCOHOL
+  TRANSPORT
+  SUBSCRIPTION
+  ENTERTAINMENT
+  CLOTHING
+  ELECTRONICS
+  HEALTH
+  SPORT
+  TRAVEL
+  OTHER
+}
+
+enum TransactionSource {
+  BANK_API
+  CSV_IMPORT
+  MANUAL
+}
+
+enum CommentType {
+  TRANSACTION
+  WEEKLY_SUMMARY
+  PATTERN_DETECTED
+  BUDGET_WARNING
+  SUGGESTION_FOLLOWUP
+}
+
+enum Mood {
+  CALM
+  INTERESTED
+  AMUSED
+  DEVASTATED
+  IRONICALLY_PLEASED
+}
+
+enum SuggestionType {
+  SWAP
+  COOK
+  CANCEL
+  RULE
+  DOWNGRADE
+  DUPLICATE
+}
+
+enum SuggestionStatus {
+  ACTIVE
+  DISMISSED
+  ACCEPTED
+  EXPIRED
+}
+
+enum Aggressiveness {
+  GENTLE
+  NORMAL
+  RUTHLESS
+  NO_MERCY
+}
+
+enum NotificationFrequency {
+  EVERY_TRANSACTION
+  IMPORTANT_ONLY
+  DAILY_SUMMARY
+  NONE
+}
