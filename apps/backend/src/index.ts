@@ -11,6 +11,7 @@ import { authRouter }         from './routes/auth'
 import { transactionsRouter } from './routes/transactions'
 import { statsRouter }        from './routes/stats'
 import { suggestionsRouter }  from './routes/suggestions'
+import { importRouter }       from './routes/import'
 import { scheduleWeeklyReportsForAllUsers } from './jobs/weeklyReport'
 
 const app  = express()
@@ -34,6 +35,7 @@ app.use('/auth',         authRouter)
 app.use('/transactions', transactionsRouter)
 app.use('/stats',        statsRouter)
 app.use('/suggestions',  suggestionsRouter)
+app.use('/import',       importRouter)
 
 app.get('/health', (_req, res) => res.json({ ok: true, ts: new Date() }))
 
